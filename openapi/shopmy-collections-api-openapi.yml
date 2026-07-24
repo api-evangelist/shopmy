@@ -1,0 +1,145 @@
+openapi: 3.1.0
+info:
+  title: ShopMy Partners Catalog Collections API
+  version: '1.0'
+  description: The ShopMy Partners API lets Brand Partners and developer applications integrate with the ShopMy creator-commerce network. Brand Partners pull detailed affiliate order reports; OAuth developer applications act on behalf of authenticated ShopMy users to read and create product links, manage shelf collections, resolve/rate product URLs, search the catalog, and read public profile information. All requests must be made over HTTPS.
+  contact:
+    name: ShopMy Developer Support
+    email: developers@shopmy.us
+    url: https://docs.shopmy.us/
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: https://docs.shopmy.us/reference/getting-started-with-your-api
+    note: Derived faithfully from the ShopMy developer documentation at docs.shopmy.us (per-endpoint reference pages + embedded schema examples). Paths, methods, parameters, scopes and status codes are as published; not an official ShopMy-published OpenAPI file.
+servers:
+- url: https://api.shopmy.us/v1/Partners
+  description: Production
+tags:
+- name: Collections
+  description: Create, edit and fetch a user's ShopMy shelf collections (OAuth).
+paths:
+  /Collections:
+    get:
+      tags:
+      - Collections
+      operationId: fetchCollections
+      summary: Fetch Collections
+      description: Fetch a user's ShopMy collections. Requires the read_collections OR write_collections scope.
+      security:
+      - developerKey: []
+        accessToken: []
+      responses:
+        '200':
+          description: Successful response.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+      - Collections
+      operationId: createCollection
+      summary: Create Collection
+      description: Create a ShopMy collection for a user. Partner-created collections are always public. Requires the write_collections scope.
+      security:
+      - developerKey: []
+        accessToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Collection name.
+                description:
+                  type: string
+                  description: Collection description.
+                social_links:
+                  type: array
+                  items:
+                    type: string
+                  description: Social URLs attached to the collection. Each must be an HTTPS Instagram, TikTok, or YouTube URL. May be sent as an array or comma-separated string.
+                section_id:
+                  type: integer
+                  description: Section for placement; defaults to the user's first standard shop section.
+      responses:
+        '200':
+          description: Collection created.
+        '400':
+          description: Bad request (missing name, invalid section, or invalid social link).
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /Collections/{id}:
+    put:
+      tags:
+      - Collections
+      operationId: editCollection
+      summary: Edit Collection
+      description: Edit one of the authenticated user's ShopMy collections. Collection privacy cannot be updated through this endpoint. Requires the write_collections scope.
+      security:
+      - developerKey: []
+        accessToken: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Collection identifier.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                social_links:
+                  type: array
+                  items:
+                    type: string
+                  description: Social URLs attached to the collection. Each must be an HTTPS Instagram, TikTok, or YouTube URL.
+                section_id:
+                  type: integer
+      responses:
+        '200':
+          description: Collection updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: 'Unauthorized. Example - "Missing required scopes: The user has not authorized you to perform this action."'
+    BadRequest:
+      description: Bad request.
+  securitySchemes:
+    developerKey:
+      type: http
+      scheme: bearer
+      description: 'Brand/developer key sent as `Authorization: Bearer <developer key>`. Found in Brand Account Settings under Tokens > Developer Key.'
+    accessToken:
+      type: apiKey
+      in: header
+      name: X-ACCESS-TOKEN
+      description: 'Per-user long-term OAuth access token sent as `X-ACCESS-TOKEN: Bearer <access token>`, obtained via the OAuth token exchange.'
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization-code flow for acting on behalf of ShopMy users.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://shopmy.us/oauth
+          tokenUrl: https://api.shopmy.us/v1/Partners/oauth-exchange-token
+          scopes:
+            read_links: View product links.
+            write_links: View and edit product links.
+            read_collections: View shelf collections.
+            write_collections: Create and edit collections.
+            read_profile: View public profile information.

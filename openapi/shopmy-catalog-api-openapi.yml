@@ -1,0 +1,120 @@
+openapi: 3.1.0
+info:
+  title: ShopMy Partners Catalog API
+  version: '1.0'
+  description: The ShopMy Partners API lets Brand Partners and developer applications integrate with the ShopMy creator-commerce network. Brand Partners pull detailed affiliate order reports; OAuth developer applications act on behalf of authenticated ShopMy users to read and create product links, manage shelf collections, resolve/rate product URLs, search the catalog, and read public profile information. All requests must be made over HTTPS.
+  contact:
+    name: ShopMy Developer Support
+    email: developers@shopmy.us
+    url: https://docs.shopmy.us/
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: https://docs.shopmy.us/reference/getting-started-with-your-api
+    note: Derived faithfully from the ShopMy developer documentation at docs.shopmy.us (per-endpoint reference pages + embedded schema examples). Paths, methods, parameters, scopes and status codes are as published; not an official ShopMy-published OpenAPI file.
+servers:
+- url: https://api.shopmy.us/v1/Partners
+  description: Production
+tags:
+- name: Catalog
+  description: Search the ShopMy catalog and resolve/rate product URLs (OAuth).
+paths:
+  /Urls:
+    post:
+      tags:
+      - Catalog
+      operationId: fetchUrlRate
+      summary: Fetch URL Rate
+      description: Get a user's merchant rate for a product URL. Requires the write_links scope.
+      security:
+      - developerKey: []
+        accessToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              properties:
+                url:
+                  type: string
+                  description: Product URL to get a user's merchant rate for.
+      responses:
+        '200':
+          description: Successful response.
+        '400':
+          description: Missing URL or no merchant.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /Catalog/search:
+    get:
+      tags:
+      - Catalog
+      operationId: searchCatalog
+      summary: Search Catalog
+      description: Search the ShopMy catalog or resolve a product URL when building a link creation experience. Provide either `search` or `url`, not both. Requires the write_links scope.
+      security:
+      - developerKey: []
+        accessToken: []
+      parameters:
+      - name: search
+        in: query
+        schema:
+          type: string
+        description: Query for catalog products (provide this OR url, not both).
+      - name: url
+        in: query
+        schema:
+          type: string
+        description: Product URL to resolve (provide this OR search, not both).
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 20
+          maximum: 50
+        description: Results per page (max 50).
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        description: Zero-indexed page number.
+      responses:
+        '200':
+          description: Successful search results.
+        '400':
+          description: Invalid query parameters (missing or conflicting parameters).
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: 'Unauthorized. Example - "Missing required scopes: The user has not authorized you to perform this action."'
+  securitySchemes:
+    developerKey:
+      type: http
+      scheme: bearer
+      description: 'Brand/developer key sent as `Authorization: Bearer <developer key>`. Found in Brand Account Settings under Tokens > Developer Key.'
+    accessToken:
+      type: apiKey
+      in: header
+      name: X-ACCESS-TOKEN
+      description: 'Per-user long-term OAuth access token sent as `X-ACCESS-TOKEN: Bearer <access token>`, obtained via the OAuth token exchange.'
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization-code flow for acting on behalf of ShopMy users.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://shopmy.us/oauth
+          tokenUrl: https://api.shopmy.us/v1/Partners/oauth-exchange-token
+          scopes:
+            read_links: View product links.
+            write_links: View and edit product links.
+            read_collections: View shelf collections.
+            write_collections: Create and edit collections.
+            read_profile: View public profile information.
