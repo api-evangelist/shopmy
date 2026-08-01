@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/shopmy-partners-openapi.yml
+note: >-
+  No official ShopMy MCP server was found. This is a candidate tool list derived
+  one-to-one from the ShopMy Partners API operations, for exposing the API to
+  agents via MCP. Auth (developer key + per-user OAuth access token) must be bound
+  per deployment.
+server:
+  name: shopmy
+  transport: http
+tools:
+  - name: fetch_order_report
+    description: Fetch a brand's affiliate order report (Brand Partner, developer-key auth).
+    source_operation: openapi/shopmy-partners-openapi.yml#fetchOrderReport
+  - name: fetch_links
+    description: Fetch a user's ShopMy product links.
+    source_operation: openapi/shopmy-partners-openapi.yml#fetchLinks
+  - name: create_link
+    description: Create a ShopMy product link from a URL.
+    source_operation: openapi/shopmy-partners-openapi.yml#createLink
+  - name: fetch_url_rate
+    description: Get a user's merchant rate for a product URL.
+    source_operation: openapi/shopmy-partners-openapi.yml#fetchUrlRate
+  - name: search_catalog
+    description: Search the ShopMy catalog or resolve a product URL.
+    source_operation: openapi/shopmy-partners-openapi.yml#searchCatalog
+  - name: fetch_collections
+    description: Fetch a user's ShopMy shelf collections.
+    source_operation: openapi/shopmy-partners-openapi.yml#fetchCollections
+  - name: create_collection
+    description: Create a ShopMy collection for a user.
+    source_operation: openapi/shopmy-partners-openapi.yml#createCollection
+  - name: edit_collection
+    description: Edit one of the user's ShopMy collections.
+    source_operation: openapi/shopmy-partners-openapi.yml#editCollection
+  - name: fetch_profile
+    description: Fetch the authenticated user's public ShopMy profile.
+    source_operation: openapi/shopmy-partners-openapi.yml#fetchProfile

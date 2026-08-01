@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
+note: >-
+  ShopMy publishes a Brand Partner sandbox for testing API access and responses.
+  The sandbox returns synthetic data and simulated responses. No public test
+  tokens or magic values are published — sandbox access tokens must be requested
+  from an account manager or developers@shopmy.us.
+test_vs_live:
+  access: "token-based (developer/sandbox token in Authorization: Bearer <token>)"
+  public_test_credentials: false
+  how_to_obtain: Request a sandbox API access token from your account manager or developers@shopmy.us.
+sandbox_operations:
+  - name: Fetch Order Report Sandbox
+    description: >-
+      Returns synthetic order data and simulated responses to test API access
+      in a development environment.
+    docs: https://docs.shopmy.us/reference/fetch-order-report-sandbox
+    rate_limit: 1000 requests/day (including paginated requests)
+    mirrors: openapi/shopmy-partners-openapi.yml#fetchOrderReport
+magic_values: []
+test_clocks: null

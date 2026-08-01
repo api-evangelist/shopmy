@@ -1,0 +1,64 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.shopmy.us/reference/getting-started-with-your-api
+note: >-
+  Cross-cutting request/response semantics for the ShopMy Partners API,
+  captured from docs.shopmy.us and derived from openapi/shopmy-partners-openapi.yml.
+transport:
+  https_required: true
+  base_url: https://api.shopmy.us/v1/Partners
+authentication:
+  # See authentication/shopmy-authentication.yml
+  brand_partner:
+    header: Authorization
+    format: "Bearer <developer key>"
+    note: Developer key from Brand Account Settings > Tokens > Developer Key.
+  oauth_developer:
+    headers:
+      - name: Authorization
+        format: "Bearer <developer key>"
+      - name: X-ACCESS-TOKEN
+        format: "Bearer <long-term access token>"
+    flow: authorization_code
+    authorization_url: https://shopmy.us/oauth
+    token_url: https://api.shopmy.us/v1/Partners/oauth-exchange-token
+    token_exchange: one-time-per-user
+pagination:
+  style: page-number
+  params:
+    page: { type: integer, zero_indexed: true, default: 0 }
+    limit:
+      order_report: { default: 500, max: 500 }
+      search_catalog: { default: 20, max: 50 }
+  sort:
+    order_report: transaction date descending (most recent first)
+idempotency:
+  supported: false
+  note: >-
+    ShopMy does not document an idempotency-key mechanism. Create operations
+    (Create Link, Create Collection) are not declared idempotent.
+error_envelope:
+  # See errors/shopmy-problem-types.yml
+  media_type: application/json
+  field: error
+  format: plain-json (not RFC 9457)
+  example: 'Missing required scopes: The user has not authorized you to perform this action.'
+rate_limiting:
+  # See lifecycle/shopmy-lifecycle.yml
+  order_report: 200 requests/day (including paginated requests)
+  order_report_sandbox: 1000 requests/day
+  signal: not documented (no rate-limit response headers published)
+scopes:
+  # See scopes/shopmy-scopes.yml
+  model: oauth2 authorization-code scopes
+  values: [read_links, write_links, read_collections, write_collections, read_profile]
+versioning:
+  # See lifecycle/shopmy-lifecycle.yml
+  scheme: uri-path
+  current: v1
+webhooks:
+  supported: false
+  note: >-
+    No partner webhook/event surface documented. Order data is retrieved by
+    polling Fetch Order Report. Merchant-side conversion tracking is via pixel
+    integrations (Shopify, WooCommerce, BigCommerce, GTM, etc.), not partner webhooks.

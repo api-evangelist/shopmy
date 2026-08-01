@@ -1,0 +1,43 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/shopmy-partners-openapi.yml
+docs: https://docs.shopmy.us/reference/getting-started-with-your-api-1
+schemes:
+- name: oauth2
+  source: openapi/shopmy-partners-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://shopmy.us/oauth
+    tokenUrl: https://api.shopmy.us/v1/Partners/oauth-exchange-token
+  description: OAuth 2.0 authorization-code flow for acting on behalf of ShopMy users.
+scopes:
+- scope: read_collections
+  description: View shelf collections.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/shopmy-partners-openapi.yml
+- scope: read_links
+  description: View product links.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/shopmy-partners-openapi.yml
+- scope: read_profile
+  description: View public profile information.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/shopmy-partners-openapi.yml
+- scope: write_collections
+  description: Create and edit collections.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/shopmy-partners-openapi.yml
+- scope: write_links
+  description: View and edit product links.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/shopmy-partners-openapi.yml

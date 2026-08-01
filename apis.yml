@@ -1,9 +1,30 @@
 aid: shopmy
 name: ShopMy
-description: 'ShopMy is a company surfaced as a portfolio company of bain-capital-ventures, bessemer-venture-partners,
-  menlo-ventures and added to the API Evangelist network as a stub for enrichment. Sector: commerce. This
-  profile is a lead awaiting the enrichment pipeline.'
+description: >-
+  ShopMy is a creator-commerce and influencer-marketing platform connecting top
+  brands with content creators across beauty, fashion, and lifestyle. Creators
+  build curated digital shops and earn performance commissions (typically
+  10-30%) plus paid brand partnerships, while brands run affiliate programs,
+  product gifting (Lookbooks), and performance budgets (Opportunities). The
+  ShopMy Partners API lets Brand Partners pull detailed affiliate order reports,
+  and lets OAuth developer applications create and read product links, manage
+  shelf collections, resolve and rate product URLs, search the catalog, and read
+  public profile information on behalf of authenticated ShopMy users. Backed by
+  Bain Capital Ventures, Bessemer Venture Partners, and Menlo Ventures.
 url: https://raw.githubusercontent.com/api-evangelist/shopmy/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://shopmy.us/favicon.ico
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -14,16 +35,179 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Commerce
-apis: []
+- Creator Economy
+- Creator Commerce
+- Affiliate Marketing
+- Influencer Marketing
+- E-Commerce
+- Retail
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: shopmy:shopmy-catalog-api
+  name: ShopMy Catalog API
+  description: Search the ShopMy catalog and resolve/rate product URLs (OAuth).
+  humanURL: https://docs.shopmy.us/
+  baseURL: https://api.shopmy.us/v1/Partners
+  tags:
+  - Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/shopmy-catalog-api-openapi.yml
+  - type: Documentation
+    url: https://docs.shopmy.us/
+  - type: APIReference
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: GettingStarted
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: Sandbox
+    url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
+- aid: shopmy:shopmy-collections-api
+  name: ShopMy Collections API
+  description: Create, edit and fetch a user's ShopMy shelf collections (OAuth).
+  humanURL: https://docs.shopmy.us/
+  baseURL: https://api.shopmy.us/v1/Partners
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/shopmy-collections-api-openapi.yml
+  - type: Documentation
+    url: https://docs.shopmy.us/
+  - type: APIReference
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: GettingStarted
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: Sandbox
+    url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
+- aid: shopmy:shopmy-links-api
+  name: ShopMy Links API
+  description: Create and fetch a user's ShopMy product links (OAuth).
+  humanURL: https://docs.shopmy.us/
+  baseURL: https://api.shopmy.us/v1/Partners
+  tags:
+  - Links
+  properties:
+  - type: OpenAPI
+    url: openapi/shopmy-links-api-openapi.yml
+  - type: Documentation
+    url: https://docs.shopmy.us/
+  - type: APIReference
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: GettingStarted
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: Sandbox
+    url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
+- aid: shopmy:shopmy-oauth-api
+  name: ShopMy OAuth API
+  description: OAuth token exchange for developer applications.
+  humanURL: https://docs.shopmy.us/
+  baseURL: https://api.shopmy.us/v1/Partners
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/shopmy-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.shopmy.us/
+  - type: APIReference
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: GettingStarted
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: Sandbox
+    url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
+- aid: shopmy:shopmy-order-reporting-api
+  name: ShopMy Order Reporting API
+  description: Brand Partner affiliate order reports (developer-key auth).
+  humanURL: https://docs.shopmy.us/
+  baseURL: https://api.shopmy.us/v1/Partners
+  tags:
+  - Order Reporting
+  properties:
+  - type: OpenAPI
+    url: openapi/shopmy-order-reporting-api-openapi.yml
+  - type: Documentation
+    url: https://docs.shopmy.us/
+  - type: APIReference
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: GettingStarted
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: Sandbox
+    url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
+- aid: shopmy:shopmy-profile-api
+  name: ShopMy Profile API
+  description: Read the authenticated user's public ShopMy profile (OAuth).
+  humanURL: https://docs.shopmy.us/
+  baseURL: https://api.shopmy.us/v1/Partners
+  tags:
+  - Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/shopmy-profile-api-openapi.yml
+  - type: Documentation
+    url: https://docs.shopmy.us/
+  - type: APIReference
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: GettingStarted
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: Sandbox
+    url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
 common:
+- type: DeveloperPortal
+  url: https://docs.shopmy.us/
+- type: Documentation
+  url: https://docs.shopmy.us/
+- type: APIReference
+  url: https://docs.shopmy.us/reference/getting-started-with-your-api
+- type: GettingStarted
+  url: https://docs.shopmy.us/reference/getting-started-with-your-api
+- type: Authentication
+  url: authentication/shopmy-authentication.yml
+- type: OAuthScopes
+  url: scopes/shopmy-scopes.yml
+- type: Conventions
+  url: conventions/shopmy-conventions.yml
+- type: ErrorCatalog
+  url: errors/shopmy-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/shopmy-lifecycle.yml
+- type: DataModel
+  url: data-model/shopmy-data-model.yml
+- type: Sandbox
+  url: sandbox/shopmy-sandbox.yml
+- type: Conformance
+  url: conformance/shopmy-conformance.yml
+- type: MCPServer
+  url: mcp/shopmy-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/shopmy-agentic-access.yml
+- type: LLMsTxt
+  url: llms/shopmy-llms.txt
+- type: DomainSecurity
+  url: security/shopmy-domain-security.yml
+- type: Blog
+  url: https://shopmy.us/blog
+- type: SignUp
+  url: https://shopmy.us/signup
+- type: Support
+  url: https://shopmy.us/contact
+- type: TermsOfService
+  url: https://shopmy.us/legal/terms-of-service
+- type: PrivacyPolicy
+  url: https://shopmy.us/legal/privacy-policy
 - type: Website
   url: https://shopmy.us/home
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 19
+  pass: local-v1

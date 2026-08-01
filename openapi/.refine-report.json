@@ -1,0 +1,24 @@
+{
+  "provider": "shopmy",
+  "sources": [
+    "shopmy-catalog-api-openapi.yml",
+    "shopmy-collections-api-openapi.yml",
+    "shopmy-links-api-openapi.yml",
+    "shopmy-oauth-api-openapi.yml",
+    "shopmy-order-reporting-api-openapi.yml",
+    "shopmy-profile-api-openapi.yml"
+  ],
+  "outputs": [
+    "shopmy-catalog-api-openapi.yml",
+    "shopmy-collections-api-openapi.yml",
+    "shopmy-links-api-openapi.yml",
+    "shopmy-oauth-api-openapi.yml",
+    "shopmy-order-reporting-api-openapi.yml",
+    "shopmy-profile-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,52 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/shopmy-partners-openapi.yml
+note: >-
+  Entity graph derived from the ShopMy Partners API operations and documented
+  object shapes. IDs observed in docs examples where noted.
+entities:
+  - name: Order
+    description: An affiliate order/transaction attributed to a brand, from any network source.
+    operations: [fetchOrderReport]
+    fields_observed: [domain, source, transactionDate, recordUpdated, sku]
+  - name: Link
+    description: A ShopMy product link created by/for a user.
+    id_example: https://go.shopmy.us/p-12345
+    operations: [fetchLinks, createLink]
+    fields_observed: [url, title, link]
+  - name: Collection
+    description: A user's ShopMy shelf collection of products/links. Partner-created collections are public.
+    id_example: https://shopmy.us/collections/12345
+    operations: [fetchCollections, createCollection, editCollection]
+    fields_observed: [id, name, description, social_links, section_id]
+  - name: CatalogProduct
+    description: A product in the ShopMy catalog, searchable or resolvable from a URL.
+    operations: [searchCatalog, fetchUrlRate]
+    fields_observed: [url, merchant, rate]
+  - name: Profile
+    description: The authenticated user's public ShopMy profile.
+    operations: [fetchProfile]
+  - name: Section
+    description: A shop section that holds collections.
+    fields_observed: [section_id]
+relationships:
+  - from: Collection
+    to: Link
+    type: has_many
+    via: links in collection
+  - from: Collection
+    to: Section
+    type: belongs_to
+    via: section_id
+  - from: Link
+    to: CatalogProduct
+    type: belongs_to
+    via: product url
+  - from: Order
+    to: CatalogProduct
+    type: has_many
+    via: sku (when reportBySKU=true)
+  - from: Profile
+    to: Collection
+    type: has_many
+    via: user profile shop

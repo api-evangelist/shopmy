@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/shopmy-partners-openapi.yml
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: openapi securitySchemes type oauth2 (authorizationCode flow with 5 scopes)
+  - id: oauth2-authorization-code
+    conforms: true
+    evidence: authorizationUrl https://shopmy.us/oauth + tokenUrl /Partners/oauth-exchange-token
+  - id: bearer-token-auth
+    conforms: true
+    evidence: http bearer developer key + X-ACCESS-TOKEN per-user access token
+  - id: https-only
+    conforms: true
+    evidence: docs require all requests over HTTPS; plain HTTP fails
+  - id: pagination
+    conforms: true
+    evidence: page/limit params across OrderReport, Search Catalog
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'errors returned as plain-json {"error": "..."}, not application/problem+json'
+  - id: idempotency
+    conforms: false
+    evidence: no idempotency-key mechanism documented
+  - id: rfc8594-sunset
+    conforms: false
+    evidence: no Sunset/Deprecation header policy documented
+  - id: webhooks
+    conforms: false
+    evidence: no partner webhook/event surface; order data is polled

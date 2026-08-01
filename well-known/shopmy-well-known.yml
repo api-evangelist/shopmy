@@ -1,0 +1,47 @@
+generated: '2026-07-21'
+method: probed
+source: live probes of /.well-known/* on shopmy.us + api.shopmy.us
+note: >-
+  shopmy.us is a single-page app that returns 200 with index.html (text/html)
+  for every path, including all probed /.well-known/ URLs — i.e. soft-404s, not
+  real discovery documents. api.shopmy.us returns a hard 404. No genuine
+  well-known documents are published; no WellKnown/SecurityTxt pointer emitted.
+hosts:
+  - host: https://shopmy.us
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        real: false
+        content_type: text/html
+        note: SPA index.html (soft-404)
+      - path: /.well-known/openid-configuration
+        status: 200
+        real: false
+        content_type: text/html
+        note: SPA index.html (soft-404)
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        real: false
+        content_type: text/html
+        note: SPA index.html (soft-404)
+      - path: /.well-known/api-catalog
+        status: 200
+        real: false
+        content_type: text/html
+        note: SPA index.html (soft-404)
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        real: false
+        content_type: text/html
+        note: SPA index.html (soft-404)
+  - host: https://api.shopmy.us
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        real: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        real: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        real: false

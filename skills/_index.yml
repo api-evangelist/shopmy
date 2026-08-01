@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/shopmy-partners-openapi.yml
+skills:
+  - file: shopmy-create-product-link.md
+    name: Create a ShopMy product link
+    api: openapi/shopmy-partners-openapi.yml
+    operations: [searchCatalog, fetchUrlRate, createLink]
+  - file: shopmy-build-collection.md
+    name: Build and edit a ShopMy collection
+    api: openapi/shopmy-partners-openapi.yml
+    operations: [fetchCollections, createCollection, editCollection]
+  - file: shopmy-pull-order-report.md
+    name: Pull a ShopMy brand order report
+    api: openapi/shopmy-partners-openapi.yml
+    operations: [fetchOrderReport]

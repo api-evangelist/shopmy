@@ -1,0 +1,57 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/shopmy-partners-openapi.yml
+format: http-status
+note: >-
+  Derived from the status codes documented on the ShopMy Partners API reference
+  pages. ShopMy returns a plain JSON envelope with an `error` string on failure
+  (not RFC 9457 problem+json). Example error body:
+  {"error": "Missing required scopes: The user has not authorized you to perform this action."}
+envelope:
+  field: error
+  media_type: application/json
+problems:
+  - status: 400
+    title: Bad Request
+    meaning: >-
+      Missing or invalid parameters. Examples - missing URL / no merchant
+      (Fetch URL Rate); missing name, invalid section, or invalid social link
+      (Create Collection); missing/conflicting search vs url (Search Catalog).
+    source_operations:
+      - openapi/shopmy-partners-openapi.yml#fetchOrderReport
+      - openapi/shopmy-partners-openapi.yml#createLink
+      - openapi/shopmy-partners-openapi.yml#createCollection
+      - openapi/shopmy-partners-openapi.yml#editCollection
+      - openapi/shopmy-partners-openapi.yml#fetchUrlRate
+      - openapi/shopmy-partners-openapi.yml#searchCatalog
+      - openapi/shopmy-partners-openapi.yml#fetchProfile
+  - status: 401
+    title: Unauthorized
+    meaning: >-
+      Missing/invalid authentication, or the user has not granted the required
+      scope. Example - "Missing required scopes: The user has not authorized you
+      to perform this action." Also returned by Fetch Order Report when
+      requesting an inaccessible source.
+    source_operations:
+      - openapi/shopmy-partners-openapi.yml#fetchOrderReport
+      - openapi/shopmy-partners-openapi.yml#fetchLinks
+      - openapi/shopmy-partners-openapi.yml#createLink
+      - openapi/shopmy-partners-openapi.yml#fetchCollections
+      - openapi/shopmy-partners-openapi.yml#createCollection
+      - openapi/shopmy-partners-openapi.yml#editCollection
+      - openapi/shopmy-partners-openapi.yml#fetchUrlRate
+      - openapi/shopmy-partners-openapi.yml#searchCatalog
+      - openapi/shopmy-partners-openapi.yml#fetchProfile
+  - status: 403
+    title: Forbidden
+    meaning: The action is not permitted for the authenticated application/user.
+    source_operations:
+      - openapi/shopmy-partners-openapi.yml#createLink
+  - status: 429
+    title: Too Many Requests
+    meaning: >-
+      Rate limit exceeded. Fetch Order Report enforces 200 requests/day
+      (including paginated requests); the sandbox equivalent enforces
+      1000 requests/day.
+    source_operations:
+      - openapi/shopmy-partners-openapi.yml#fetchOrderReport

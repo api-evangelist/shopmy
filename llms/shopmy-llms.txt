@@ -1,0 +1,32 @@
+# ShopMy Developers Documentation
+
+> Documentation for ShopMy Developers
+
+## API Reference
+- [Getting Started](https://docs.shopmy.us/reference/getting-started-with-your-api.md): This page will help you get started with the ShopMy API for Brand Partners.
+- [Fetch Order Report](https://docs.shopmy.us/reference/fetch-order-report.md): This API request allows brand partners to fetch a report on orders to your brand. This route supports all affiliate program sources and provides detailed info for all ShopMy order records. Orders are returned by transaction date descending (most recent first). A daily rate limit is enforced of 200 requests per day (including paginated requests). At the maximum limit of 500 orders returned per API call, this yields 100,000 orders available for a report per day. Orders are returned sorted by transaction date descending.
+- [Getting Started: OAuth Setup](https://docs.shopmy.us/reference/getting-started-with-your-api-1.md): This page will help you get started with the ShopMy API for developers. This API section details authentication steps required to take action on behalf of authenticated ShopMy users via OAuth.
+- [Fetch Collections](https://docs.shopmy.us/reference/fetch-collections.md): This API route allows a developer application to fetch a user's ShopMy collections. This route requires the user to permission your app for the read_collections OR write_collections scope.
+- [Fetch Links](https://docs.shopmy.us/reference/fetch-links.md): This API route allows a developer application to fetch a user's ShopMy links. This route requires the user to permission your app for the read_links OR write_links scope.
+- [Create Collection](https://docs.shopmy.us/reference/create-collection-1.md): This API route allows a developer application to create a ShopMy collection for a user. This route requires the user to permission your app for the write_collections scope. Partner-created collections are always public.
+- [Edit Collection](https://docs.shopmy.us/reference/edit-collection-1.md): This API route allows a developer application to edit one of the authenticated user's ShopMy collections. This route requires the user to permission your app for the write_collections scope. Collection privacy cannot be updated through this endpoint.
+- [Fetch Profile](https://docs.shopmy.us/reference/fetch-profile-1.md): This API route allows a developer application to fetch the authenticated user's public ShopMy profile information. This route requires the user to permission your app for the read_profile scope.
+- [Search Catalog](https://docs.shopmy.us/reference/search-catalog-1.md): This API route allows a developer application to search the ShopMy catalog or resolve a product URL when building a link creation experience. This route requires the user to permission your app for the write_links scope.
+- [Affiliate Network Setup Options](https://docs.shopmy.us/reference/getting-started-1.md): This documentation provides setup instructions to integrate with the ShopMy Affiliate Network! By default, the ShopMy network operates with a 30-day cookie window. Additionally, a 30-day return window applies from the transaction date before order amounts are locked and commission is sent out in the next commission invoice.
+- [Direct Setup](https://docs.shopmy.us/reference/direct-setup.md)
+- [Direct Integration For Non-DTC Services](https://docs.shopmy.us/reference/direct-integration-for-services.md)
+- [WooCommerce Integration Setup](https://docs.shopmy.us/reference/woocommerce-integration-setup.md)
+- [BigCommerce Integration Setup](https://docs.shopmy.us/reference/bigcommerce-integration-setup.md)
+- [Salesforce Integration Setup](https://docs.shopmy.us/reference/salesforce-integration-setup.md)
+- [MIVA Integration Setup](https://docs.shopmy.us/reference/miva-integration-setup.md)
+- [GTM Integration Setup](https://docs.shopmy.us/reference/gtm-integration-setup.md)
+- [Shopify Integration Setup](https://docs.shopmy.us/reference/shopify-integration-setup.md): If Shopify is used in any capacity by your brand. Please use this page as your guide.
+- [Create ShopMy's Shopify App](https://docs.shopmy.us/reference/create-shopmy-shopify-app.md)
+- [GTM with Shopify Extensibility Tracking](https://docs.shopmy.us/reference/gtm-with-shopify-extensibility-tracking.md)
+- [GTM with App Tracking](https://docs.shopmy.us/reference/gtm-with-app-tracking-copy.md)
+- [Site Direct with App Tracking](https://docs.shopmy.us/reference/gtm-with-app-tracking.md)
+- [Site Direct with Shopify Extensibility Tracking](https://docs.shopmy.us/reference/shopify-extensibility-checkout-pixel.md)
+- [Privacy and Data Handling](https://docs.shopmy.us/reference/privacy-and-data-handling.md)
+- [SynXis GTM Integration Setup](https://docs.shopmy.us/reference/synxis-gtm-integration-setup.md)
+- [Getting Started With Sandbox API](https://docs.shopmy.us/reference/getting-started-with-sandbox-api.md): This page will help you get started with the ShopMy development sandbox API for Brand Partners.
+- [Fetch Order Report Sandbox](https://docs.shopmy.us/reference/fetch-order-report-sandbox.md): This sandbox API request allows brand partners to test API access and responses for fetching a report on orders to your brand. This route is for use in a development environment and returns synthetic data and simulated responses to test API access. A daily sandbox rate limit is enforced of 1000 requests per day (including paginated requests).

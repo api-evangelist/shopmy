@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.shopmy.us/reference/getting-started-with-your-api
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.shopmy.us/v1/Partners
+  docs: https://docs.shopmy.us/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation/sunset policy located.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+rate_limits:
+  order_report: 200 requests/day (including paginated requests)
+  order_report_sandbox: 1000 requests/day
+business_windows:
+  cookie_window_days: 30
+  return_window_days: 30
+  note: >-
+    ShopMy affiliate network defaults to a 30-day cookie window; a 30-day return
+    window applies from transaction date before order amounts lock and commission
+    is paid on the next invoice.
+deprecated_operations: []

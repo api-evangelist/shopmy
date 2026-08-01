@@ -1,0 +1,39 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/shopmy-partners-openapi.yml
+docs: https://docs.shopmy.us/reference/getting-started-with-your-api-1
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: developerKey
+  type: http
+  scheme: bearer
+  description: 'Brand/developer key sent as `Authorization: Bearer <developer key>`. Found in
+    Brand Account Settings under Tokens > Developer Key.'
+  sources:
+  - openapi/shopmy-partners-openapi.yml
+- name: accessToken
+  type: apiKey
+  in: header
+  parameter: X-ACCESS-TOKEN
+  description: 'Per-user long-term OAuth access token sent as `X-ACCESS-TOKEN: Bearer <access
+    token>`, obtained via the OAuth token exchange.'
+  sources:
+  - openapi/shopmy-partners-openapi.yml
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://shopmy.us/oauth
+    tokenUrl: https://api.shopmy.us/v1/Partners/oauth-exchange-token
+    scopes: 5
+  description: OAuth 2.0 authorization-code flow for acting on behalf of ShopMy users.
+  sources:
+  - openapi/shopmy-partners-openapi.yml

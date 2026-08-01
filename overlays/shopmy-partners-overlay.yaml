@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for ShopMy Partners API
+  version: 1.0.0
+extends: openapi/shopmy-partners-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-rating: 4
+      x-api-evangelist: https://apievangelist.com
+      x-artifacts:
+        authentication: authentication/shopmy-authentication.yml
+        scopes: scopes/shopmy-scopes.yml
+        conventions: conventions/shopmy-conventions.yml
+        errors: errors/shopmy-problem-types.yml
+        lifecycle: lifecycle/shopmy-lifecycle.yml
+        data-model: data-model/shopmy-data-model.yml
+        sandbox: sandbox/shopmy-sandbox.yml
+        mcp: mcp/shopmy-mcp.yml
+  - target: $.info
+    update:
+      x-categories:
+        - creator-commerce
+        - affiliate-marketing
+        - influencer-marketing
+        - e-commerce
