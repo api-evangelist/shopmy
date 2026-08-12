@@ -160,6 +160,8 @@ apis:
   - type: Sandbox
     url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
 common:
+- type: Overlay
+  url: overlays/shopmy-partners-overlay.yaml
 - type: DeveloperPortal
   url: https://docs.shopmy.us/
 - type: Documentation
