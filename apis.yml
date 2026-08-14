@@ -35,7 +35,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 tags:
 - Company
 - Commerce
@@ -159,6 +159,33 @@ apis:
     url: https://docs.shopmy.us/reference/getting-started-with-your-api
   - type: Sandbox
     url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
+- aid: shopmy:shopmy-tracking-api
+  name: ShopMy Tracking API
+  description: >-
+    Server-to-server affiliate tracking routes a brand calls to report completed
+    orders to ShopMy for creator commission attribution, and to keep those
+    commissions accurate through returns, edits and cancellations. Order
+    Confirmation is unauthenticated and resolves the brand from the page URL
+    domain; Order Update and Order Cancellation take the brand developer key as
+    a bearer token. Every request is answered with an outcome code recorded on
+    the brand's Tracking Health page, and most outcomes return HTTP 200 even
+    when no commission could be attributed. Documented on docs.shopmy.us
+    without an OpenAPI definition.
+  humanURL: https://docs.shopmy.us/reference/tracking-routes-overview
+  baseURL: https://api.shopmy.us/api
+  tags:
+  - Tracking
+  - Affiliate
+  - Order Attribution
+  properties:
+  - type: Documentation
+    url: https://docs.shopmy.us/reference/tracking-routes-overview
+  - type: APIReference
+    url: https://docs.shopmy.us/reference/order-confirmation
+  - type: EventCatalog
+    url: asyncapi/shopmy-tracking-events.yml
+  - type: ErrorCodes
+    url: errors/shopmy-outcome-codes.yml
 common:
 - type: Overlay
   url: overlays/shopmy-partners-overlay.yaml
@@ -178,6 +205,22 @@ common:
   url: conventions/shopmy-conventions.yml
 - type: ErrorCatalog
   url: errors/shopmy-problem-types.yml
+- type: ErrorCodes
+  url: errors/shopmy-outcome-codes.yml
+- type: Idempotency
+  url: conventions/shopmy-conventions.yml
+- type: RateLimits
+  url: rate-limits/shopmy-rate-limits.yml
+- type: Plans
+  url: plans/shopmy-plans-pricing.yml
+- type: Packages
+  url: packages/shopmy-packages.yml
+- type: EventCatalog
+  url: asyncapi/shopmy-tracking-events.yml
+- type: Integrations
+  url: components/shopmy-components.yml
+- type: Compliance
+  url: https://docs.shopmy.us/reference/privacy-and-data-handling
 - type: Lifecycle
   url: lifecycle/shopmy-lifecycle.yml
 - type: DataModel
@@ -209,7 +252,7 @@ common:
 - type: Website
   url: https://shopmy.us/home
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-13'
   status: enriched
-  artifacts_added: 19
+  artifacts_added: 7
   pass: local-v1
