@@ -1,0 +1,221 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.shopmy.us/reference/order-confirmation
+docs:
+  - https://docs.shopmy.us/reference/order-confirmation
+  - https://docs.shopmy.us/reference/order-update
+  - https://docs.shopmy.us/reference/order-cancellation
+  - https://docs.shopmy.us/reference/tracking-routes-overview
+note: >-
+  ShopMy's tracking routes return an OUTCOME CODE on every request, recorded
+  against the brand and surfaced on the ShopMy Tracking Health page
+  (https://shopmy.us/tracking-health). This is a distinct error surface from
+  errors/shopmy-problem-types.yml, which covers HTTP status semantics on the
+  Partners API. Most outcomes return HTTP 200 — the request was accepted and
+  recorded even when no commission could be attributed — so a client that
+  checks only the status code will silently miss attribution failures. The
+  outcome code, not the status code, is the signal that matters. Codes marked
+  fix_required indicate a defect in the caller's integration.
+envelope:
+  media_type: application/json
+  success_field: success
+  error_field: error
+  message_field: message
+  success_example: '{ "success": true, "message": "..." }'
+  failure_example: '{ "success": false, "error": "..." }'
+  format: plain-json (not RFC 9457 problem+json)
+outcome_code_count: 22
+outcome_codes:
+  - code: tracked
+    routes: [order_confirmation, order_update, order_cancellation]
+    http_status: 200
+    class: success
+    fix_required: false
+    meaning: >-
+      Order Confirmation - the order matched a ShopMy click, code or shopper and
+      a commission was created. Order Update - the commission was found and its
+      amount updated. Order Cancellation - the commission was found and
+      cancelled.
+    action: None.
+  - code: no_attribution
+    routes: [order_confirmation]
+    http_status: 200
+    class: informational
+    fix_required: false
+    meaning: A direct order with no ShopMy attribution.
+    action: Expected for most traffic; nothing to do.
+  - code: duplicate_order
+    routes: [order_confirmation]
+    http_status: 400
+    class: idempotency
+    fix_required: false
+    meaning: >-
+      An order ID that was already sent. The first event counted; this one was
+      ignored.
+    action: >-
+      None — this is the deduplication guarantee working. Safe to retry a
+      confirmation without double-counting. See conventions/shopmy-conventions.yml.
+  - code: shopify_handoff
+    routes: [order_confirmation]
+    http_status: 200
+    class: informational
+    fix_required: false
+    meaning: The brand's Shopify integration already handles this order; the event was handed off to it.
+    action: None.
+  - code: blacklisted_code
+    routes: [order_confirmation]
+    http_status: 200
+    class: informational
+    fix_required: false
+    meaning: The discount code on the order is excluded from tracking.
+    action: None unless the exclusion is unintended.
+  - code: expired_click
+    routes: [order_confirmation]
+    http_status: 200
+    class: attribution
+    fix_required: false
+    meaning: A ShopMy click existed but fell outside the attribution window.
+    action: >-
+      None. The ShopMy network default cookie window is 30 days — see
+      lifecycle/shopmy-lifecycle.yml.
+  - code: cross_brand_click
+    routes: [order_confirmation]
+    http_status: 200
+    class: attribution
+    fix_required: false
+    meaning: The click on the order belonged to a different brand.
+    action: None.
+  - code: property_mismatch
+    routes: [order_confirmation]
+    http_status: 200
+    class: attribution
+    fix_required: false
+    meaning: The order came from a different property than the click.
+    action: None.
+  - code: unregistered_property
+    routes: [order_confirmation]
+    http_status: 200
+    class: configuration
+    fix_required: false
+    meaning: The property sending the event is not registered with ShopMy.
+    action: Register the property with ShopMy if it should be tracked.
+  - code: click_not_found
+    routes: [order_confirmation]
+    http_status: 400
+    class: attribution
+    fix_required: false
+    meaning: A click id was sent but no matching click exists on file.
+    action: Verify the sms_click_id cookie value is being read and forwarded intact.
+  - code: banned_user
+    routes: [order_confirmation]
+    http_status: 200
+    class: informational
+    fix_required: false
+    meaning: The attributed account is inactive on ShopMy; no commission is created.
+    action: None.
+  - code: invalid_order_amount
+    routes: [order_confirmation, order_update]
+    http_status: 400
+    class: client-error
+    fix_required: true
+    meaning: >-
+      Order Confirmation - the orderAmount field is missing or not a usable
+      number. Order Update - the new_order_amount field could not be parsed as
+      a number.
+    action: >-
+      Pass the order total as a plain number greater than 0, with no currency
+      symbols or markup.
+  - code: invalid_order_id
+    routes: [order_confirmation]
+    http_status: 400
+    class: client-error
+    fix_required: true
+    meaning: The orderId field is missing or unusable.
+    action: Pass a unique id for the completed order.
+  - code: malformed_click_id
+    routes: [order_confirmation]
+    http_status: 400
+    class: client-error
+    fix_required: true
+    meaning: The clickId sent could not be read.
+    action: Pass the sms_click_id cookie value exactly as it was stored.
+  - code: unresolved_domain
+    routes: [order_confirmation, order_update, order_cancellation]
+    http_status: 400
+    class: client-error
+    fix_required: true
+    meaning: >-
+      Order Confirmation - the event arrived without a domain ShopMy could match
+      to the account. Order Update / Cancellation - the brand could not be
+      resolved from the request.
+    action: >-
+      On Order Confirmation, make sure page_url (or the domain field) matches
+      the domain registered with ShopMy. On Update and Cancellation, check that
+      the Authorization header carries the developer key.
+  - code: unregistered_code
+    routes: [order_confirmation]
+    http_status: 200
+    class: configuration
+    fix_required: true
+    meaning: The discount code on the order is not registered to a ShopMy creator.
+    action: If the code should track commissions, add it to the matching creator's account.
+  - code: insert_failed
+    routes: [order_confirmation, order_update]
+    http_status: 200
+    class: server-error
+    fix_required: false
+    meaning: The event reached ShopMy but failed to save on ShopMy's side.
+    action: No change needed from the integrating team.
+  - code: handler_error
+    routes: [order_confirmation, order_update, order_cancellation]
+    http_status: 200
+    class: server-error
+    fix_required: false
+    meaning: The event hit a processing error on ShopMy's side.
+    action: No change needed from the integrating team.
+  - code: order_not_found
+    routes: [order_update, order_cancellation]
+    http_status: 200
+    class: informational
+    fix_required: false
+    meaning: >-
+      No ShopMy commission exists for this order_id — usually the original order
+      had no ShopMy attribution.
+    action: Returned as a success; nothing to do.
+  - code: already_cancelled
+    routes: [order_cancellation]
+    http_status: 200
+    class: idempotency
+    fix_required: false
+    meaning: The commission was already cancelled by an earlier request.
+    action: >-
+      None — cancellation is idempotent on order_id. Safe to retry. See
+      conventions/shopmy-conventions.yml.
+  - code: invalid_params
+    routes: [order_update, order_cancellation]
+    http_status: 400
+    class: client-error
+    fix_required: true
+    meaning: >-
+      Order Update - the request is missing required fields; every update must
+      carry order_id, currency and new_order_amount. Order Cancellation - the
+      order_id is missing or the wrong type.
+    action: Send order_id as a string or number, never an object, with all required fields.
+http_statuses:
+  - status: 200
+    meaning: >-
+      The event was received and recorded — including events ShopMy has nothing
+      to attribute. Check the outcome code, not the status.
+  - status: 400
+    meaning: The request could not be processed as sent; the error field says why.
+  - status: 401
+    meaning: >-
+      The Authorization header is missing or carries an invalid key. Applies to
+      Order Update and Order Cancellation only — Order Confirmation is
+      unauthenticated and matches the brand from the page URL domain.
+observability:
+  dashboard: https://shopmy.us/tracking-health
+  note: >-
+    Every tracking event is stamped with the route it arrived through and its
+    outcome code; both are shown on the brand's Tracking Health page. This is
+    the only published feedback channel for attribution failures.

@@ -1,0 +1,62 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.shopmy.us/reference/fetch-order-report
+docs:
+  - https://docs.shopmy.us/reference/fetch-order-report
+  - https://docs.shopmy.us/reference/fetch-order-report-sandbox
+note: >-
+  ShopMy publishes daily request quotas on the Order Report routes only, stated
+  in prose on the reference pages. No rate-limit response headers are
+  documented anywhere in the ShopMy developer documentation, and no limits are
+  published for the OAuth developer routes (Links, Collections, Catalog,
+  Profile) or for the tracking routes (Order Confirmation / Update /
+  Cancellation). The absence of a runtime signal is the finding: an agent
+  cannot discover remaining quota from a ShopMy response, only by exhausting it.
+limit_count: 2
+limits:
+  - name: Order Report daily quota
+    scope: per-account
+    window: 1 day
+    limit: 200
+    unit: requests
+    burst: null
+    applies_to:
+      - openapi/shopmy-order-reporting-api-openapi.yml#fetchOrderReport
+    endpoint: GET https://api.shopmy.us/v1/Partners/OrderReport
+    docs: https://docs.shopmy.us/reference/fetch-order-report
+    note: >-
+      "A daily rate limit is enforced of 200 requests per day (including
+      paginated requests). At the maximum limit of 500 orders returned per API
+      call, this yields 100,000 orders available for a report per day."
+      Paginated requests count individually against the quota.
+  - name: Order Report Sandbox daily quota
+    scope: per-account
+    window: 1 day
+    limit: 1000
+    unit: requests
+    burst: null
+    applies_to:
+      - sandbox/shopmy-sandbox.yml
+    docs: https://docs.shopmy.us/reference/fetch-order-report-sandbox
+    note: >-
+      "A daily sandbox rate limit is enforced of 1000 requests per day
+      (including paginated requests)."
+response_headers:
+  documented: false
+  headers: []
+  note: >-
+    No X-RateLimit-*, RateLimit-* (RFC 9331) or Retry-After header is documented
+    on any ShopMy route. Clients have no published runtime signal for remaining
+    quota, quota reset, or backoff duration.
+exhaustion:
+  status_code: 429
+  body: 'plain JSON envelope: {"error": "..."} — see errors/shopmy-problem-types.yml'
+  retry_after: not documented
+  source: errors/shopmy-problem-types.yml
+undocumented_surfaces:
+  - surface: OAuth developer routes (Links, Collections, Catalog, Profile)
+    note: No published rate limit.
+  - surface: Tracking routes (/api/order_confirmation, /api/Affiliates/update, /api/Affiliates/cancel)
+    note: >-
+      No published rate limit, despite these being the highest-volume routes in
+      the product (one call per completed order).

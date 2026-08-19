@@ -1,4 +1,4 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://docs.shopmy.us/reference/getting-started-with-your-api
 versioning:
@@ -14,6 +14,50 @@ sla:
   url: null
   uptime_target: null
 status_page: null
+status_page_probe:
+  checked: '2026-08-13'
+  result: none
+  rejected_candidate:
+    url: https://shopmy.statuspage.io
+    http_status: 200
+    reason: >-
+      DIFFERENT COMPANY - do not credit this to shopmy.us on a later pass. The
+      subdomain resolves to a real Atlassian Statuspage titled "SHOPMY Status",
+      but its components are labelled in Chinese (享买应用程序, 商铺系统, 私信服务) and
+      include Melbourne Cloudflare acceleration nodes and an SMS verification
+      service - the infrastructure of an unrelated Chinese/Australian app that
+      happens to share the name. None of it corresponds to shopmy.us, the US
+      creator-commerce platform, whose product surface is the Partners API, the
+      creator storefronts and the affiliate tracking pixel. Name collision on a
+      statuspage.io subdomain, not ShopMy's status page.
+  paths_checked:
+    - {url: 'https://status.shopmy.us', status: 000, note: DNS does not resolve}
+    - {url: 'https://shopmy.statuspage.io', status: 200, note: rejected - different company, see above}
+  note: >-
+    ShopMy publishes no status page for the Partners or tracking APIs. The
+    Tracking Health page (https://shopmy.us/tracking-health) is the closest
+    equivalent, but it is a per-brand authenticated dashboard of that brand's own
+    event outcomes, not a public platform status page.
+tracking_health:
+  url: https://shopmy.us/tracking-health
+  scope: per-brand, authenticated
+  shows: >-
+    The route each tracking event arrived through and its outcome code. See
+    errors/shopmy-outcome-codes.yml.
+changelog:
+  published: false
+  checked: '2026-08-13'
+  paths_checked:
+    - {url: 'https://docs.shopmy.us/changelog', status: 404}
+    - {url: 'https://docs.shopmy.us/reference/changelog', status: 404}
+    - {url: 'https://docs.shopmy.us/changelog.rss', status: 404}
+    - {url: 'https://docs.shopmy.us/recipes', status: 404}
+  note: >-
+    No dated changelog or release notes. The only version signal ShopMy exposes
+    is an `updatedAt` timestamp in the frontmatter of each documentation page -
+    the tracking route pages carry 2026-07-28, which is when that surface was
+    published. That is a docs-edit timestamp, not a release record, so no
+    changelog artifact is emitted.
 rate_limits:
   order_report: 200 requests/day (including paginated requests)
   order_report_sandbox: 1000 requests/day

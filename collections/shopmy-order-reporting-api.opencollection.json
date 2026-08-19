@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ShopMy Partners Catalog Order Reporting API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Order Reporting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Order Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.shopmy.us/v1/Partners/OrderReport",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a report on orders to your brand. Supports all affiliate program sources and returns detailed ShopMy order records, sorted by transaction date descending. A daily rate limit of 200 requests per day is enforced (including paginated requests); at 500 orders per call this yields up to 100,000 orders per day."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

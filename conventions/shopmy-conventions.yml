@@ -1,9 +1,25 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://docs.shopmy.us/reference/getting-started-with-your-api
 note: >-
   Cross-cutting request/response semantics for the ShopMy Partners API,
   captured from docs.shopmy.us and derived from openapi/shopmy-partners-openapi.yml.
+  Revised 2026-08-13: ShopMy published a server-to-server TRACKING API
+  (Order Confirmation / Update / Cancellation, plus a tracking route overview)
+  after the first pass. Those routes live on a different base path and carry
+  different auth, idempotency and error semantics from the Partners API, so
+  every block below is now scoped by surface.
+surfaces:
+  partners_api:
+    base_url: https://api.shopmy.us/v1/Partners
+    audience: Brand Partners (developer key) and OAuth developer applications
+    specs: openapi/
+  tracking_api:
+    base_url: https://api.shopmy.us/api
+    audience: A brand's own storefront and server, reporting orders for attribution
+    specs: none published
+    catalog: asyncapi/shopmy-tracking-events.yml
+    docs: https://docs.shopmy.us/reference/tracking-routes-overview
 transport:
   https_required: true
   base_url: https://api.shopmy.us/v1/Partners
@@ -33,10 +49,51 @@ pagination:
   sort:
     order_report: transaction date descending (most recent first)
 idempotency:
-  supported: false
+  supported: partial
+  scope: tracking_api
+  mechanism: caller-supplied-resource-id
+  key_header: null
+  key_field:
+    order_confirmation: orderId
+    order_update: order_id
+    order_cancellation: order_id
+  retention: not documented
+  source: https://docs.shopmy.us/reference/order-confirmation
   note: >-
-    ShopMy does not document an idempotency-key mechanism. Create operations
-    (Create Link, Create Collection) are not declared idempotent.
+    ShopMy documents no generic Idempotency-Key header. It does document real
+    deduplication on the tracking routes, keyed on the CALLER-SUPPLIED order id
+    rather than a separate idempotency key. This is a genuine safe-retry
+    contract on the highest-volume routes in the product, and it is documented
+    by outcome code rather than by header.
+  guarantees:
+    - route: POST /api/order_confirmation
+      guarantee: >-
+        Re-sending an order id that was already accepted returns the
+        duplicate_order outcome with HTTP 400. "The first event counted; this
+        one was ignored." A confirmation can therefore be retried without
+        double-counting a commission.
+      outcome: duplicate_order
+    - route: POST /api/Affiliates/cancel
+      guarantee: >-
+        Re-cancelling an order returns the already_cancelled outcome with HTTP
+        200 and no further effect. "The commission was already cancelled by an
+        earlier request. Nothing to do."
+      outcome: already_cancelled
+    - route: POST /api/Affiliates/update
+      guarantee: >-
+        Update sets the commission to an absolute new_order_amount rather than
+        applying a delta, so replaying the same update converges on the same
+        state. ShopMy does not state this as an idempotency guarantee; it is
+        the natural consequence of the documented set-to-value semantics.
+      outcome: tracked
+      confidence: medium
+  not_supported_on:
+    surface: partners_api
+    note: >-
+      The Partners API create operations (createLink, createCollection) declare
+      no idempotency key and no dedupe behaviour. Retrying a failed create can
+      duplicate the resource.
+  cross_reference: errors/shopmy-outcome-codes.yml
 error_envelope:
   # See errors/shopmy-problem-types.yml
   media_type: application/json
@@ -57,8 +114,25 @@ versioning:
   scheme: uri-path
   current: v1
 webhooks:
-  supported: false
+  outbound_supported: false
+  inbound_supported: true
+  catalog: asyncapi/shopmy-tracking-events.yml
   note: >-
-    No partner webhook/event surface documented. Order data is retrieved by
-    polling Fetch Order Report. Merchant-side conversion tracking is via pixel
-    integrations (Shopify, WooCommerce, BigCommerce, GTM, etc.), not partner webhooks.
+    ShopMy sends no webhooks. Its event surface is entirely inbound: brands POST
+    order events to the tracking routes, and platform apps (Shopify, Zenoti,
+    MIVA, BigCommerce) deliver to ShopMy's AffiliateWebhooks receivers. There is
+    nothing a partner or agent can subscribe to; partner-side order data is
+    retrieved by polling Fetch Order Report. Delivery semantics for the
+    receivers — signing, secrets, replay protection, retries — are not
+    documented.
+error_semantics:
+  partners_api:
+    signal: HTTP status code
+    catalog: errors/shopmy-problem-types.yml
+  tracking_api:
+    signal: >-
+      outcome code in the response body. Most outcomes return HTTP 200 even when
+      attribution failed, so status-code-only error handling silently misses
+      failures.
+    catalog: errors/shopmy-outcome-codes.yml
+    observability: https://shopmy.us/tracking-health

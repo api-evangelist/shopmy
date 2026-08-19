@@ -28,5 +28,10 @@
 - [Site Direct with Shopify Extensibility Tracking](https://docs.shopmy.us/reference/shopify-extensibility-checkout-pixel.md)
 - [Privacy and Data Handling](https://docs.shopmy.us/reference/privacy-and-data-handling.md)
 - [SynXis GTM Integration Setup](https://docs.shopmy.us/reference/synxis-gtm-integration-setup.md)
+- [Zenoti Integration Setup](https://docs.shopmy.us/reference/zenoti-integration-setup.md)
 - [Getting Started With Sandbox API](https://docs.shopmy.us/reference/getting-started-with-sandbox-api.md): This page will help you get started with the ShopMy development sandbox API for Brand Partners.
 - [Fetch Order Report Sandbox](https://docs.shopmy.us/reference/fetch-order-report-sandbox.md): This sandbox API request allows brand partners to test API access and responses for fetching a report on orders to your brand. This route is for use in a development environment and returns synthetic data and simulated responses to test API access. A daily sandbox rate limit is enforced of 1000 requests per day (including paginated requests).
+- [Order Confirmation](https://docs.shopmy.us/reference/order-confirmation.md): Send every completed order to ShopMy for commission attribution.
+- [Order Update](https://docs.shopmy.us/reference/order-update.md): Update a tracked order's amount after returns or edits.
+- [Order Cancellation](https://docs.shopmy.us/reference/order-cancellation.md): Cancel the commission on a cancelled or refunded order.
+- [Tracking Routes Overview](https://docs.shopmy.us/reference/tracking-routes-overview.md): What each tracking route does and where it fits in the product.

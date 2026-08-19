@@ -1,6 +1,18 @@
-generated: '2026-07-21'
-method: derived
+generated: '2026-08-13'
+method: searched
 source: openapi/shopmy-partners-openapi.yml
+docs:
+  - https://docs.shopmy.us/reference/order-confirmation
+  - https://docs.shopmy.us/reference/order-cancellation
+  - https://docs.shopmy.us/reference/privacy-and-data-handling
+note: >-
+  Revised 2026-08-13 against ShopMy's newly published tracking documentation.
+  Two assertions from the first pass changed: idempotency is now partially
+  conformant (documented dedupe on the tracking routes), and a published data
+  handling / GDPR posture was located. No security certifications (SOC 2, ISO
+  27001, PCI DSS, HIPAA, FedRAMP) are published anywhere on shopmy.us or
+  docs.shopmy.us, and no trust center or vulnerability disclosure programme
+  exists — probe-security-programs.py returned "vdp=none trust=none".
 standards:
   - id: oauth2
     conforms: true
@@ -21,11 +33,57 @@ standards:
     conforms: false
     evidence: 'errors returned as plain-json {"error": "..."}, not application/problem+json'
   - id: idempotency
-    conforms: false
-    evidence: no idempotency-key mechanism documented
+    conforms: partial
+    evidence: >-
+      No generic Idempotency-Key header. Real deduplication is documented on the
+      tracking routes, keyed on the caller-supplied order id - POST
+      /api/order_confirmation returns duplicate_order ("the first event counted;
+      this one was ignored") and POST /api/Affiliates/cancel returns
+      already_cancelled. The Partners API create operations (createLink,
+      createCollection) declare no idempotency.
+    scope: tracking_api
+    source: https://docs.shopmy.us/reference/order-confirmation
   - id: rfc8594-sunset
     conforms: false
     evidence: no Sunset/Deprecation header policy documented
   - id: webhooks
     conforms: false
-    evidence: no partner webhook/event surface; order data is polled
+    evidence: >-
+      No outbound webhook or event subscription surface. ShopMy operates inbound
+      receivers only (Shopify/Zenoti/MIVA/BigCommerce deliver TO ShopMy); a
+      partner cannot subscribe to anything and must poll Fetch Order Report.
+      See asyncapi/shopmy-tracking-events.yml.
+  - id: rfc9331-ratelimit-headers
+    conforms: false
+    evidence: >-
+      Daily quotas are published in prose (200/day order report, 1000/day
+      sandbox) but no RateLimit-* or X-RateLimit-* response header is documented
+      on any route. See rate-limits/shopmy-rate-limits.yml.
+  - id: gdpr
+    conforms: partial
+    evidence: >-
+      "ShopMy complies with Shopify's mandatory GDPR webhook requirements." The
+      Privacy and Data Handling page publishes a data-access, data-retention and
+      deletion posture - ShopMy states it stores no customer PII, never stores
+      customer email addresses received via order webhooks, and reads customer
+      order count only when the read_customers scope is granted. The claim is
+      scoped to the Shopify integration; no independent GDPR attestation, DPA or
+      sub-processor list is published.
+    source: https://docs.shopmy.us/reference/privacy-and-data-handling
+  - id: soc2
+    conforms: false
+    evidence: no SOC 2 report or trust center published
+  - id: iso27001
+    conforms: false
+    evidence: no ISO 27001 certification published
+  - id: pci-dss
+    conforms: false
+    evidence: >-
+      No PCI DSS claim. ShopMy handles order amounts and currency for commission
+      attribution, not card data.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: >-
+      No /.well-known/security.txt served. shopmy.us answers 200 with the SPA
+      index.html for every /.well-known/ path (soft-404); api.shopmy.us returns
+      a hard 404. See well-known/shopmy-well-known.yml.

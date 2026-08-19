@@ -1,0 +1,94 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.shopmy.us/llms.txt
+docs:
+  - https://docs.shopmy.us/reference/getting-started-1
+  - https://docs.shopmy.us/reference/shopify-integration-setup
+  - https://docs.shopmy.us/reference/create-shopmy-shopify-app
+  - https://docs.shopmy.us/reference/gtm-integration-setup
+  - https://docs.shopmy.us/reference/tracking-routes-overview
+note: >-
+  ShopMy ships no embeddable UI component library — no web components, no JS
+  element library, no hosted checkout or embedded dashboard. What it does
+  distribute client-side is a TRACKING PIXEL and a set of platform apps and tag
+  templates that install it. These are catalogued here because they are
+  first-party client-side code a brand embeds in its storefront, and because
+  they carry no package-registry metadata (see packages/shopmy-packages.yml).
+  Every entry below is an integration surface, not a rendered UI component.
+component_count: 0
+components: []
+client_side_distributions:
+  - family: Tracking pixel
+    name: ShopMy pixel
+    kind: javascript-snippet
+    installed_on: The brand's storefront
+    purpose: >-
+      Confirms a creator-link click actually landed on the storefront by calling
+      /api/confirm_click. Documented as "baked into the pixel — you never call
+      this yourself."
+    registry: none
+    version: null
+    version_note: >-
+      Unpinned. ShopMy publishes no version identifier for the pixel and no
+      registry entry; the snippet is installed from ShopMy's setup instructions
+      or injected by a platform app, so a brand cannot tell which build it is
+      running.
+    docs: https://docs.shopmy.us/reference/tracking-routes-overview
+  - family: Platform app
+    name: ShopMy Shopify App
+    kind: platform-app
+    installed_on: The merchant's Shopify store
+    purpose: >-
+      Installs tracking, registers ShopMy's webhook subscriptions on the store
+      (order created/updated/fulfilled/cancelled, product updated, app
+      uninstalled) and manages creator discount codes.
+    distribution: Shopify App Store
+    registry: none
+    version: null
+    version_note: >-
+      No version published in ShopMy's own documentation; Shopify manages app
+      versioning outside any public registry endpoint.
+    docs: https://docs.shopmy.us/reference/create-shopmy-shopify-app
+  - family: Tag manager template
+    name: ShopMy Google Tag Manager tracking
+    kind: gtm-template
+    installed_on: The brand's Google Tag Manager container
+    purpose: Deploys ShopMy conversion tracking without direct code changes.
+    variants:
+      - name: GTM Integration Setup
+        docs: https://docs.shopmy.us/reference/gtm-integration-setup
+      - name: GTM with Shopify Extensibility Tracking
+        docs: https://docs.shopmy.us/reference/gtm-with-shopify-extensibility-tracking
+      - name: GTM with App Tracking
+        docs: https://docs.shopmy.us/reference/gtm-with-app-tracking-copy
+      - name: SynXis GTM Integration Setup
+        docs: https://docs.shopmy.us/reference/synxis-gtm-integration-setup
+    registry: none
+    version: null
+    version_note: Unpinned; no published version identifier.
+  - family: Checkout pixel
+    name: Shopify Extensibility Checkout Pixel
+    kind: platform-pixel
+    installed_on: Shopify checkout (customer events sandbox)
+    purpose: Fires ShopMy conversion tracking from the Shopify checkout extensibility surface.
+    registry: none
+    version: null
+    version_note: Unpinned; no published version identifier.
+    docs: https://docs.shopmy.us/reference/shopify-extensibility-checkout-pixel
+platform_integrations_documented:
+  - {platform: Shopify, docs: https://docs.shopmy.us/reference/shopify-integration-setup}
+  - {platform: WooCommerce, docs: https://docs.shopmy.us/reference/woocommerce-integration-setup}
+  - {platform: BigCommerce, docs: https://docs.shopmy.us/reference/bigcommerce-integration-setup}
+  - {platform: Salesforce, docs: https://docs.shopmy.us/reference/salesforce-integration-setup}
+  - {platform: MIVA, docs: https://docs.shopmy.us/reference/miva-integration-setup}
+  - {platform: Zenoti, docs: https://docs.shopmy.us/reference/zenoti-integration-setup}
+  - {platform: SynXis, docs: https://docs.shopmy.us/reference/synxis-gtm-integration-setup}
+  - {platform: Direct (site/server), docs: https://docs.shopmy.us/reference/direct-setup}
+  - {platform: Direct for non-DTC services, docs: https://docs.shopmy.us/reference/direct-integration-for-services}
+pointer_decision:
+  components_pointer_emitted: false
+  rationale: >-
+    No `type: Components` pointer is wired into apis.yml. That type denotes an
+    embeddable UI component library a developer renders; ShopMy publishes none.
+    The artifact is wired as `type: Integrations` instead, which is what this
+    surface actually is.

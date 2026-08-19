@@ -1,0 +1,46 @@
+generated: '2026-08-13'
+method: searched
+source: https://shopmy.us/pricing
+note: >-
+  ShopMy publishes no pricing page and no plan tiers. shopmy.us is a
+  single-page application that answers HTTP 200 with the same 3,836-byte
+  index.html shell for every unmatched path — /pricing, /brands/pricing,
+  /roadmap and /security all return that identical shell, so the 200s are
+  soft-404s, not pricing content. Fetching /pricing through a renderer confirms
+  an empty app shell with no tiers, prices or quotas. The ShopMy developer
+  documentation (docs.shopmy.us, full index at /llms.txt) contains no pricing,
+  billing or plan page either. Brand access is arranged through an account
+  manager — the sandbox documentation directs developers to "request a sandbox
+  API access token from your account manager or developers@shopmy.us" — which
+  is a sales-gated commercial model rather than a published plan set.
+plan_count: 0
+plans: []
+commercial_model:
+  type: sales-gated
+  self_serve_signup: true
+  self_serve_note: >-
+    Creators can sign up self-serve at https://shopmy.us/signup, but that is
+    creator enrolment, not API plan purchase. API access for Brand Partners and
+    OAuth developer applications is provisioned by ShopMy staff.
+  api_access_contact: developers@shopmy.us
+  api_access_note: >-
+    Developer keys are issued in Brand Account Settings > Tokens > Developer
+    Key, available to brands ShopMy has already onboarded.
+  revenue_model_published:
+    - description: >-
+        ShopMy's public creator-facing material describes performance
+        commissions in the 10-30% range paid by brands on attributed sales.
+        This is the affiliate commission rate paid to creators, NOT a price for
+        API or platform access, and is recorded here only so it is not mistaken
+        for a plan.
+      source: apis.yml description
+evidence:
+  - url: https://shopmy.us/pricing
+    status: 200
+    note: SPA index.html shell, 3836 bytes, identical to every other unmatched path
+  - url: https://shopmy.us/brands/pricing
+    status: 200
+    note: identical 3836-byte SPA shell
+  - url: https://docs.shopmy.us/llms.txt
+    status: 200
+    note: full documentation index — contains no pricing, plans or billing page

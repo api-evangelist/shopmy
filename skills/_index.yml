@@ -1,7 +1,19 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: generated
 source: openapi/shopmy-partners-openapi.yml
 skills:
+  - file: shopmy-report-order-for-attribution.md
+    name: Report a ShopMy order for commission attribution
+    api: asyncapi/shopmy-tracking-events.yml
+    grounding: docs
+    grounding_note: >-
+      Grounded in the documented tracking-route contracts on docs.shopmy.us,
+      which ShopMy publishes without an OpenAPI. No operationIds exist to cite.
+    operations: []
+    routes:
+      - POST /api/order_confirmation
+      - POST /api/Affiliates/update
+      - POST /api/Affiliates/cancel
   - file: shopmy-create-product-link.md
     name: Create a ShopMy product link
     api: openapi/shopmy-partners-openapi.yml

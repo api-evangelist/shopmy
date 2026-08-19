@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ShopMy Partners Catalog Links API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.shopmy.us/v1/Partners/Links",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a user's ShopMy links. Requires the read_links OR write_links scope."
+        },
+        {
+          "info": {
+            "name": "Create Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.shopmy.us/v1/Partners/Links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a ShopMy link for a user from a product URL. Requires the write_links scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

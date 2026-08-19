@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ShopMy Partners Catalog OAuth API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OAuth Exchange Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.shopmy.us/v1/Partners/oauth-exchange-token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Exchange a one-time OAuth authorization code (shopmy_code) for a long-term access token. Token exchange can only be done once per user for security purposes; store the resulting access token securely."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

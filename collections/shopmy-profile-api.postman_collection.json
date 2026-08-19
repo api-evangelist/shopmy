@@ -1,0 +1,186 @@
+{
+  "item": [
+    {
+      "id": "2d76b7af-6d36-4650-95d9-ff8267cfcf00",
+      "name": "Profile",
+      "description": {
+        "content": "Read the authenticated user's public ShopMy profile (OAuth).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "188ec18d-8654-43d2-9b29-2ec1e90680cf",
+          "name": "Fetch Profile",
+          "request": {
+            "name": "Fetch Profile",
+            "description": {
+              "content": "Fetch the authenticated user's public ShopMy profile information. Requires the read_profile scope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "Profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7006e10c-4c82-4f4b-9d0a-343bd10ae603",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "Profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "98388d83-8168-4496-8b74-2a459e388833",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "Profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a9fb48f5-5f32-4560-abf2-8bb6f131cc51",
+              "name": "Unauthorized. Example - \"Missing required scopes: The user has not authorized you to perform this action.\"",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "Profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.shopmy.us/v1/Partners",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bb39d99c-e12d-4632-bef6-e44b27d370ef",
+    "name": "ShopMy Partners Catalog Profile API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The ShopMy Partners API lets Brand Partners and developer applications integrate with the ShopMy creator-commerce network. Brand Partners pull detailed affiliate order reports; OAuth developer applications act on behalf of authenticated ShopMy users to read and create product links, manage shelf collections, resolve/rate product URLs, search the catalog, and read public profile information. All requests must be made over HTTPS.\n\nContact Support:\n Name: ShopMy Developer Support\n Email: developers@shopmy.us",
+      "type": "text/plain"
+    }
+  }
+}

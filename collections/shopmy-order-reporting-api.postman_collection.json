@@ -1,0 +1,272 @@
+{
+  "item": [
+    {
+      "id": "9bf6f4e5-bc68-4458-b254-5d6e9bf229ae",
+      "name": "Order Reporting",
+      "description": {
+        "content": "Brand Partner affiliate order reports (developer-key auth).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2c8a1602-df12-4495-923e-f45de4d37c8f",
+          "name": "Fetch Order Report",
+          "request": {
+            "name": "Fetch Order Report",
+            "description": {
+              "content": "Fetch a report on orders to your brand. Supports all affiliate program sources and returns detailed ShopMy order records, sorted by transaction date descending. A daily rate limit of 200 requests per day is enforced (including paginated requests); at 500 orders per call this yields up to 100,000 orders per day.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "OrderReport"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"limit\": 500,\n  \"page\": 0,\n  \"transactionStartDate\": \"<string>\",\n  \"transactionEndDate\": \"<string>\",\n  \"recordUpdatedStartDate\": \"<string>\",\n  \"recordUpdatedEndDate\": \"<string>\",\n  \"reportBySKU\": false,\n  \"source\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bc3ef20c-44c9-41bb-a87d-91724dd2ecce",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OrderReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"limit\": 500,\n  \"page\": 0,\n  \"transactionStartDate\": \"<string>\",\n  \"transactionEndDate\": \"<string>\",\n  \"recordUpdatedStartDate\": \"<string>\",\n  \"recordUpdatedEndDate\": \"<string>\",\n  \"reportBySKU\": false,\n  \"source\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "710e45e1-a472-4af2-a9a0-3cb877268d20",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OrderReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"limit\": 500,\n  \"page\": 0,\n  \"transactionStartDate\": \"<string>\",\n  \"transactionEndDate\": \"<string>\",\n  \"recordUpdatedStartDate\": \"<string>\",\n  \"recordUpdatedEndDate\": \"<string>\",\n  \"reportBySKU\": false,\n  \"source\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6fe8a59e-afc7-4f05-b69d-cb3f7c4540c6",
+              "name": "Unauthorized. Example - \"Missing required scopes: The user has not authorized you to perform this action.\"",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OrderReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"limit\": 500,\n  \"page\": 0,\n  \"transactionStartDate\": \"<string>\",\n  \"transactionEndDate\": \"<string>\",\n  \"recordUpdatedStartDate\": \"<string>\",\n  \"recordUpdatedEndDate\": \"<string>\",\n  \"reportBySKU\": false,\n  \"source\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7c6dc3bb-38d4-4603-b59f-e321d536e453",
+              "name": "Rate limit exceeded (200 requests per day).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "OrderReport"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"limit\": 500,\n  \"page\": 0,\n  \"transactionStartDate\": \"<string>\",\n  \"transactionEndDate\": \"<string>\",\n  \"recordUpdatedStartDate\": \"<string>\",\n  \"recordUpdatedEndDate\": \"<string>\",\n  \"reportBySKU\": false,\n  \"source\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.shopmy.us/v1/Partners",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8d621e12-c1c1-43d7-874e-4b139c516644",
+    "name": "ShopMy Partners Catalog Order Reporting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The ShopMy Partners API lets Brand Partners and developer applications integrate with the ShopMy creator-commerce network. Brand Partners pull detailed affiliate order reports; OAuth developer applications act on behalf of authenticated ShopMy users to read and create product links, manage shelf collections, resolve/rate product URLs, search the catalog, and read public profile information. All requests must be made over HTTPS.\n\nContact Support:\n Name: ShopMy Developer Support\n Email: developers@shopmy.us",
+      "type": "text/plain"
+    }
+  }
+}

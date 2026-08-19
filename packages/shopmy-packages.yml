@@ -1,0 +1,60 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, rubygems.org, crates.io, GitHub code
+  search, and https://docs.shopmy.us/llms.txt (the full ShopMy developer docs
+  index)
+note: >-
+  No first-party ShopMy client library exists on any public package registry.
+  The npm registry search for "shopmy" returns only unrelated third-party
+  packages; PyPI (shopmy, shopmy-api, shopmy-sdk), RubyGems and crates.io have
+  no ShopMy package at all. ShopMy's own documentation index lists no SDK,
+  client library, or code-sample repository — integration is documented as raw
+  HTTPS calls against https://api.shopmy.us. No `SDKs` pointer is emitted,
+  because ShopMy ships none.
+package_count: 0
+packages: []
+registries_checked:
+  - registry: npm
+    endpoint: https://registry.npmjs.org/-/v1/search?text=shopmy
+    status: 200
+    first_party_hits: 0
+    note: >-
+      Four results returned, all for the unrelated DOOMSCROLLR packages; no
+      package published by or for ShopMy.
+  - registry: pypi
+    endpoint: https://pypi.org/pypi/shopmy/json
+    status: 404
+    first_party_hits: 0
+  - registry: pypi
+    endpoint: https://pypi.org/pypi/shopmy-api/json
+    status: 404
+    first_party_hits: 0
+  - registry: pypi
+    endpoint: https://pypi.org/pypi/shopmy-sdk/json
+    status: 404
+    first_party_hits: 0
+  - registry: rubygems
+    endpoint: https://rubygems.org/api/v1/gems/shopmy.json
+    status: 404
+    first_party_hits: 0
+  - registry: crates.io
+    endpoint: https://crates.io/api/v1/crates?q=shopmy
+    status: 200
+    first_party_hits: 0
+    note: '{"crates":[],"meta":{"total":0}}'
+  - registry: github
+    endpoint: https://api.github.com/orgs/shopmy
+    status: 404
+    first_party_hits: 0
+    note: >-
+      No ShopMy GitHub organization exists. A repository search for "shopmy"
+      returns only unrelated projects (ShopMyCloset, shopmypham, ShopMyExchange
+      and similar), none owned by shopmy.us. No `GitHubOrganization` pointer
+      emitted.
+distribution_note: >-
+  ShopMy does distribute one piece of first-party client-side code — the ShopMy
+  tracking pixel and its Google Tag Manager / Shopify app variants — but it is
+  installed through the merchant's tag manager or the Shopify App Store rather
+  than a package registry, so it carries no registry version metadata. It is
+  catalogued in components/shopmy-components.yml instead.

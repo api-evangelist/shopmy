@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ShopMy Partners Catalog Collections API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.shopmy.us/v1/Partners/Collections",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a user's ShopMy collections. Requires the read_collections OR write_collections scope."
+        },
+        {
+          "info": {
+            "name": "Create Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.shopmy.us/v1/Partners/Collections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a ShopMy collection for a user. Partner-created collections are always public. Requires the write_collections scope."
+        },
+        {
+          "info": {
+            "name": "Edit Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.shopmy.us/v1/Partners/Collections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Collection identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Edit one of the authenticated user's ShopMy collections. Collection privacy cannot be updated through this endpoint. Requires the write_collections scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

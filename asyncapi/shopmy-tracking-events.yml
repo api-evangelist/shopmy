@@ -1,0 +1,161 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.shopmy.us/reference/tracking-routes-overview
+docs:
+  - https://docs.shopmy.us/reference/tracking-routes-overview
+  - https://docs.shopmy.us/reference/order-confirmation
+  - https://docs.shopmy.us/reference/order-update
+  - https://docs.shopmy.us/reference/order-cancellation
+  - https://docs.shopmy.us/reference/privacy-and-data-handling
+spec_type: none
+asyncapi_published: false
+direction: inbound
+direction_note: >-
+  READ THIS FIRST. ShopMy's event surface runs INBOUND — ShopMy is the RECEIVER,
+  never the sender. Brands and commerce platforms POST order events TO ShopMy so
+  commissions can be attributed, and ShopMy registers its own subscriptions on
+  the merchant's Shopify store to pull events in. ShopMy publishes NO outbound
+  webhook, no event subscription API, and no streaming endpoint: there is
+  nothing an external consumer or agent can subscribe to in order to be notified
+  when a ShopMy commission is created, updated or cancelled. Partner-side data is
+  retrieved by POLLING the Order Report route. This artifact is catalogued as the
+  provider's documented webhook surface, and the inversion is recorded here so it
+  is never read as a subscribe-capable event stream.
+subscribe_surface_for_consumers: false
+pointer_decision:
+  webhooks_pointer_emitted: false
+  rationale: >-
+    No `type: Webhooks` pointer is wired into apis.yml for this artifact. The
+    Webhooks pointer asserts that a provider advertises events a consumer can
+    receive, and ShopMy advertises none — every endpoint catalogued below is one
+    ShopMy receives on. Emitting the pointer would credit ShopMy with an agent
+    event surface it does not operate. The artifact is instead wired as
+    `type: EventCatalog`, which is descriptive and matches no scored check.
+poll_alternative:
+  operation: openapi/shopmy-order-reporting-api-openapi.yml#fetchOrderReport
+  endpoint: GET https://api.shopmy.us/v1/Partners/OrderReport
+  rate_limit: 200 requests/day — see rate-limits/shopmy-rate-limits.yml
+  note: >-
+    The only way for a partner to learn about new or changed orders is to poll
+    this route, sorted by transaction date descending.
+
+server_to_server_routes:
+  note: >-
+    Routes the brand's own site or server calls. Fully documented request/response
+    contracts; outcome codes catalogued in errors/shopmy-outcome-codes.yml.
+  routes:
+    - name: Order Confirmation
+      method: POST
+      path: /api/order_confirmation
+      url: https://api.shopmy.us/api/order_confirmation
+      called_by: The brand's site or server, on every completed order
+      auth: none
+      auth_note: >-
+        No API key is required — the event is matched to the brand through the
+        page URL's domain.
+      required_fields: [orderAmount, orderId, currency, page_url]
+      recommended_fields: [clickId]
+      optional_fields: [code, test, is_returning_customer, domain, returnWindowClosesAt]
+      docs: https://docs.shopmy.us/reference/order-confirmation
+    - name: Order Update
+      method: POST
+      path: /api/Affiliates/update
+      url: https://api.shopmy.us/api/Affiliates/update
+      called_by: The brand's server, when an order total changes
+      auth: 'Authorization: Bearer <developer key>'
+      required_fields: [order_id, new_order_amount, currency]
+      optional_fields: [domain, test]
+      docs: https://docs.shopmy.us/reference/order-update
+    - name: Order Cancellation
+      method: POST
+      path: /api/Affiliates/cancel
+      url: https://api.shopmy.us/api/Affiliates/cancel
+      called_by: The brand's server, when an order is cancelled or fully refunded
+      auth: 'Authorization: Bearer <developer key>'
+      required_fields: [order_id]
+      optional_fields: [domain, test]
+      docs: https://docs.shopmy.us/reference/order-cancellation
+
+webhook_receiver_endpoints:
+  note: >-
+    Endpoints ShopMy exposes to RECEIVE webhooks from commerce platforms. A brand
+    configures its platform to deliver here; the brand does not receive anything
+    from ShopMy.
+  endpoints:
+    - name: Shopify Order Created
+      path: /api/Shopify/order_created/:Brand_id
+      sent_by: The brand's Shopify app
+      purpose: Reports a new order the moment it is placed.
+    - name: Shopify Order Updated
+      path: /api/Shopify/order_updated/:Brand_id
+      sent_by: The brand's Shopify app
+      purpose: Syncs order edits and returns onto tracked commissions.
+    - name: Shopify Order Fulfilled
+      path: /api/Shopify/order_fulfilled/:Brand_id
+      sent_by: The brand's Shopify app
+      purpose: Reports fulfillment updates to tracked orders.
+    - name: Shopify Order Cancelled
+      path: /api/Shopify/order_cancelled/:Brand_id
+      sent_by: The brand's Shopify app
+      purpose: Voids the commission when an order is cancelled.
+    - name: Partner Cancellation
+      path: /v1/Partners/Commissions/cancel
+      sent_by: Partner platforms
+      purpose: Order cancellations arriving through the ShopMy Partners API.
+      note: >-
+        Named in the tracking route table but not documented as a reference page
+        and not present in openapi/ — no request/response contract is published.
+    - name: Platform Affiliate Webhooks
+      path: /api/AffiliateWebhooks/...
+      sent_by: Zenoti, MIVA and BigCommerce
+      purpose: Order status updates for stores on those platforms.
+      note: Path published only as a prefix; per-platform paths are not documented.
+
+click_routes:
+  - name: Click Redirect
+    path: /api/redirect_click
+    sent_by: Shoppers, via creator links
+    purpose: >-
+      Creator link clicks passing through ShopMy on the way to the brand's site —
+      where a click is recorded and attribution begins.
+  - name: Click Confirmation
+    path: /api/confirm_click
+    sent_by: The ShopMy pixel on the brand's site
+    purpose: >-
+      Confirms a click actually landed on the storefront. Baked into the pixel —
+      never called directly.
+
+shopify_subscriptions:
+  note: >-
+    Events ShopMy subscribes to on the MERCHANT'S Shopify store, per the Privacy
+    and Data Handling page. ShopMy is the subscriber here as well.
+  source: https://docs.shopmy.us/reference/privacy-and-data-handling
+  events:
+    - {event: Order created, purpose: Attribute the order to a creator and record commission}
+    - {event: Order cancelled, purpose: Mark the associated commission as cancelled}
+    - {event: Order fulfilled, purpose: Update shipment tracking info for lookbook orders}
+    - {event: Order updated, purpose: Keep commission and fulfillment records in sync}
+    - {event: Product updated, purpose: Refresh variant availability in creator storefronts}
+    - {event: App uninstalled, purpose: Disable the integration and trigger data deletion}
+
+reconciliation:
+  name: Shopify Nightly Sync
+  sent_by: ShopMy (scheduled)
+  purpose: >-
+    Nightly reconciliation re-reading recent Shopify orders to catch anything a
+    webhook missed.
+
+delivery_semantics:
+  signing: not documented
+  secret_verification: not documented
+  retry_policy: not documented
+  ordering: not documented
+  note: >-
+    ShopMy documents no signature header, shared secret, replay protection or
+    retry policy for any of the receiver endpoints. A brand posting to
+    /api/order_confirmation is unauthenticated and identified only by the domain
+    in page_url, which is the weakest identity binding on the whole surface.
+  idempotency: >-
+    Deduplication is by caller-supplied order id — see the duplicate_order and
+    already_cancelled outcomes in errors/shopmy-outcome-codes.yml and the
+    idempotency block in conventions/shopmy-conventions.yml.

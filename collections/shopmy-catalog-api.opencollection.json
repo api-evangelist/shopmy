@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ShopMy Partners Catalog API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch URL Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.shopmy.us/v1/Partners/Urls",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a user's merchant rate for a product URL. Requires the write_links scope."
+        },
+        {
+          "info": {
+            "name": "Search Catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.shopmy.us/v1/Partners/Catalog/search",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Query for catalog products (provide this OR url, not both)."
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "Product URL to resolve (provide this OR search, not both)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Results per page (max 50)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Zero-indexed page number."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Search the ShopMy catalog or resolve a product URL when building a link creation experience. Provide either `search` or `url`, not both. Requires the write_links scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
