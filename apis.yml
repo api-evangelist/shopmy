@@ -75,6 +75,8 @@ apis:
   humanURL: https://docs.shopmy.us/
   baseURL: https://api.shopmy.us/v1/Partners
   tags:
+  - Collection
+  tags_raw:
   - Collections
   properties:
   - type: OpenAPI
@@ -111,6 +113,8 @@ apis:
   humanURL: https://docs.shopmy.us/
   baseURL: https://api.shopmy.us/v1/Partners
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
@@ -174,6 +178,10 @@ apis:
   humanURL: https://docs.shopmy.us/reference/tracking-routes-overview
   baseURL: https://api.shopmy.us/api
   tags:
+  - Tracking
+  - Affiliates
+  - Order Attribution
+  tags_raw:
   - Tracking
   - Affiliate
   - Order Attribution
