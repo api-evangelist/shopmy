@@ -119,26 +119,6 @@ apis:
     url: https://docs.shopmy.us/reference/getting-started-with-your-api
   - type: Sandbox
     url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
-- aid: shopmy:shopmy-oauth-api
-  name: ShopMy OAuth API
-  description: OAuth token exchange for developer applications.
-  humanURL: https://docs.shopmy.us/
-  baseURL: https://api.shopmy.us/v1/Partners
-  tags:
-  - Authentication
-  tags_raw:
-  - OAuth
-  properties:
-  - type: OpenAPI
-    url: openapi/shopmy-oauth-api-openapi.yml
-  - type: Documentation
-    url: https://docs.shopmy.us/
-  - type: APIReference
-    url: https://docs.shopmy.us/reference/getting-started-with-your-api
-  - type: GettingStarted
-    url: https://docs.shopmy.us/reference/getting-started-with-your-api
-  - type: Sandbox
-    url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
 - aid: shopmy:shopmy-order-reporting-api
   name: ShopMy Order Reporting API
   description: Brand Partner affiliate order reports (developer-key auth).
@@ -178,15 +158,13 @@ apis:
 - aid: shopmy:shopmy-tracking-api
   name: ShopMy Tracking API
   description: >-
-    Server-to-server affiliate tracking routes a brand calls to report completed
-    orders to ShopMy for creator commission attribution, and to keep those
-    commissions accurate through returns, edits and cancellations. Order
-    Confirmation is unauthenticated and resolves the brand from the page URL
-    domain; Order Update and Order Cancellation take the brand developer key as
-    a bearer token. Every request is answered with an outcome code recorded on
-    the brand's Tracking Health page, and most outcomes return HTTP 200 even
-    when no commission could be attributed. Documented on docs.shopmy.us
-    without an OpenAPI definition.
+    Server-to-server affiliate tracking routes a brand calls to report completed orders to ShopMy for
+    creator commission attribution, and to keep those commissions accurate through returns, edits and
+    cancellations. Order Confirmation is unauthenticated and resolves the brand from the page URL domain;
+    Order Update and Order Cancellation take the brand developer key as a bearer token. Every request
+    is answered with an outcome code recorded on the brand's Tracking Health page, and most outcomes return
+    HTTP 200 even when no commission could be attributed. Documented on docs.shopmy.us without an OpenAPI
+    definition.
   humanURL: https://docs.shopmy.us/reference/tracking-routes-overview
   baseURL: https://api.shopmy.us/api
   tags:
@@ -206,6 +184,24 @@ apis:
     url: asyncapi/shopmy-tracking-events.yml
   - type: ErrorCodes
     url: errors/shopmy-outcome-codes.yml
+- aid: shopmy:shopmy-oauth-api
+  name: ShopMy O Auth API
+  description: OAuth token exchange for developer applications.
+  humanURL: https://docs.shopmy.us/
+  baseURL: https://api.shopmy.us/v1/Partners
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/shopmy-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.shopmy.us/
+  - type: APIReference
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: GettingStarted
+    url: https://docs.shopmy.us/reference/getting-started-with-your-api
+  - type: Sandbox
+    url: https://docs.shopmy.us/reference/getting-started-with-sandbox-api
 common:
 - type: Overlay
   url: overlays/shopmy-partners-overlay.yaml
