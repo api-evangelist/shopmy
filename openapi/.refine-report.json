@@ -1,12 +1,7 @@
 {
   "provider": "shopmy",
   "sources": [
-    "shopmy-catalog-api-openapi.yml",
-    "shopmy-collections-api-openapi.yml",
-    "shopmy-links-api-openapi.yml",
-    "shopmy-oauth-api-openapi.yml",
-    "shopmy-order-reporting-api-openapi.yml",
-    "shopmy-profile-api-openapi.yml"
+    "_original/shopmy-partners-openapi.yml"
   ],
   "outputs": [
     "shopmy-catalog-api-openapi.yml",
@@ -16,9 +11,23 @@
     "shopmy-order-reporting-api-openapi.yml",
     "shopmy-profile-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "shopmy-partners-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: shopmy-o-auth-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 7 total)"
+  ],
+  "skipped": [
+    "shopmy-catalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shopmy-collections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shopmy-links-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shopmy-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shopmy-order-reporting-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shopmy-profile-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
