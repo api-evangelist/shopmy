@@ -69,10 +69,10 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   responses:
-    Forbidden:
-      description: Forbidden.
     Unauthorized:
       description: 'Unauthorized. Example - "Missing required scopes: The user has not authorized you to perform this action."'
+    Forbidden:
+      description: Forbidden.
     BadRequest:
       description: Bad request.
   securitySchemes:

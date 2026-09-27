@@ -116,10 +116,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
-    BadRequest:
-      description: Bad request.
     Unauthorized:
       description: 'Unauthorized. Example - "Missing required scopes: The user has not authorized you to perform this action."'
+    BadRequest:
+      description: Bad request.
   securitySchemes:
     developerKey:
       type: http
