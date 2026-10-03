@@ -71,10 +71,10 @@ components:
   responses:
     Unauthorized:
       description: 'Unauthorized. Example - "Missing required scopes: The user has not authorized you to perform this action."'
-    Forbidden:
-      description: Forbidden.
     BadRequest:
       description: Bad request.
+    Forbidden:
+      description: Forbidden.
   securitySchemes:
     developerKey:
       type: http
